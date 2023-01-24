@@ -1,6 +1,6 @@
 name: esim
 description: Flutter plugin to check eSIM compatibility.
-version: 0.0.2
+version: 0.0.3
 homepage: https://github.com/nalini15/eSIM_compatibility
 
 environment:
