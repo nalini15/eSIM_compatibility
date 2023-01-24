@@ -100,7 +100,9 @@ class _MyAppState extends State<MyApp> {
   }
 }
 ```
-
+# Upcoming features
+- eSIM compatibility for Android
+- eSIM installation for iOS and Android
 
 ## Conclusion
 
