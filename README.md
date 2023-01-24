@@ -7,16 +7,16 @@ This allows for more flexibility in activating and switching between different m
 
 ## Compatibility Check:
 You can integrate eSIM functionality into your iOS app, please follow these steps:
-## Step 1:
+### Step 1:
 Request for eSIM entitlement using your developer account.
 
-## Step 2:
+### Step 2:
 Apple will approve the entitlement after some time. You can check if Apple has approved the entitlement from your app profile setting
 
-## Step 3:
+### Step 3:
 Download the App Dev and Distribution profile (By selecting eSIM entitlement as Step #2).
 
-## Step 4:
+### Step 4:
 Update your Info.plist with below keys and value
 
 ```
@@ -36,7 +36,9 @@ Update your Info.plist with below keys and value
 ```
 You can find GID1, GID2, MCC, and MNC for eSIM compatibility from the following sources:
 
-## Mobile network operators - You can contact your mobile network operator and ask for the GID1, GID2, MCC, and MNC for your specific eSIM card.
+### Mobile network operators - 
+
+You can contact your mobile network operator and ask for the GID1, GID2, MCC, and MNC for your specific eSIM card.
 Online eSIM providers - Many online eSIM providers, such as Truphone, Twilio, and Unlocator, will provide the GID1, GID2, MCC, and MNC for their eSIM cards on their websites.
 Device manufacturers - Some device manufacturers, such as Apple and Samsung, will provide the GID1, GID2, MCC, and MNC for their eSIM-compatible devices on their website or in the device's user manual.
 eSIM databases - There are online databases, such as esimdb.com, that provide information on eSIM cards and their GID1, GID2, MCC, and MNC.
@@ -45,67 +47,67 @@ It is important to note that eSIM compatibility can vary depending on the mobile
 and device, so it is important to check with the specific provider or manufacturer for the most
 accurate information.
 
-## Step 5:
+### Step 5:
 Add eSIM compatibility code to AppDelegate file.
 
 ### main.dart
 ```dart
 class MyApp extends StatefulWidget {
-@override
-MyAppState createState() => MyAppState();
+  @override
+  MyAppState createState() => MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-int isEsimCompatible = 0;
+  int isEsimCompatible = 0;
 
-// Platform messages are asynchronous, so we initialize in an async method.
-Future<void> checkEsimCompatibility() async {
+  // Platform messages are asynchronous, so we initialize in an async method.
+  Future<void> checkEsimCompatibility() async {
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    try {
+      isEsimCompatible = await Esim.isEsim();
+    } on PlatformException {
+      debugPrint('Failed to get esim compatibility.');
+    }
+  }
 
-// Platform messages may fail, so we use a try/catch PlatformException.
-try {
-isEsimCompatible = await Esim.isEsim();
-} on PlatformException {
-debugPrint('Failed to get esim compatibility.');
-}
-}
-
-@override
-Widget build(BuildContext context) {
-return MaterialApp(
-home: Scaffold(
-appBar: AppBar(
-title: const Text('eSIM Compatibility example'),
-),
-body: Center(
-child: ElevatedButton(
-onPressed: ()async {
-await checkEsimCompatibility();
-Fluttertoast.showToast(
-msg: isEsimCompatible ==1 ? "This device supports eSIM ":'This device does not supports eSIM',
-toastLength: Toast.LENGTH_LONG,
-gravity: ToastGravity.BOTTOM,
-timeInSecForIosWeb: 1,
-backgroundColor: Colors.grey,
-textColor: Colors.white,
-fontSize: 16.0
-);
-},
-child: const Text("Check eSIM compatibility"),
-),
-),
-),
-);
-}
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('eSIM Compatibility example'),
+        ),
+        body: Center(
+          child: ElevatedButton(
+            onPressed: () async {
+              await checkEsimCompatibility();
+              Fluttertoast.showToast(
+                  msg: isEsimCompatible == 1
+                      ? "This device supports eSIM "
+                      : 'This device does not supports eSIM',
+                  toastLength: Toast.LENGTH_LONG,
+                  gravity: ToastGravity.BOTTOM,
+                  timeInSecForIosWeb: 1,
+                  backgroundColor: Colors.grey,
+                  textColor: Colors.white,
+                  fontSize: 16.0);
+            },
+            child: const Text("Check eSIM compatibility"),
+          ),
+        ),
+      ),
+    );
+  }
 }
 ```
 
 
-# Conclusion
+## Conclusion
 
 With these steps, you can now check if your iOS device is compatible with eSIM,
 activate eSIM and switch between eSIM and physical SIM.
 
-# Referral link:
+## Referral link:
 https://developer.apple.com/documentation/coretelephony?changes=latest_minor
 
 
